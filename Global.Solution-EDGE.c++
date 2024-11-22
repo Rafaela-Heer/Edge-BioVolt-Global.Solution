@@ -1,6 +1,8 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+
 LiquidCrystal_I2C lcd(34, 16, 2);
+
 #define ledG 13
 #define ledY 12
 #define ledR 11
@@ -12,6 +14,7 @@ LiquidCrystal_I2C lcd(34, 16, 2);
 int limiteGas = 700;
 float limiteTemperatura = 100.0;
 bool geradorLigado = false;
+
 void setup() {
 
   pinMode(ledG, OUTPUT);
@@ -37,6 +40,7 @@ void setup() {
   Serial.begin(9600);
 
 }
+
 void loop() {
 
   bool botaoPressionado = digitalRead(button) == HIGH;
@@ -45,6 +49,7 @@ void loop() {
   float temperatura = (temp * (5.0 / 1023.0) - 0.5) * 100.0;
 
   if (temperatura > limiteTemperatura && geradorLigado) {
+    
     geradorLigado = false;
     Serial.println("ALERTA: Temperatura alta - Desligando gerador");
 
@@ -68,6 +73,7 @@ void loop() {
     geradorLigado = botaoPressionado;
 
   }
+  
   lcd.clear();
   Serial.print("Estado do Gerador: ");
   Serial.println(geradorLigado ? "Ligado" : "Desligado");
@@ -166,4 +172,5 @@ void loop() {
   }
 
   delay(1000);
+  
 }
